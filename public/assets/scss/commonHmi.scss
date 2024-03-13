@@ -1,0 +1,108 @@
+
+$color-primary: #0B0B61;
+$color-second: #A9D0F5;
+$color-third: #0f4089;
+$color-fourth: #5982c0;
+$color-blue-gray: #607d8b;
+$color-background: rgb(200, 200, 200);
+$color-alarm: #f44336ed;
+$color-safety-stop: hsl(36, 100%, 63%);
+
+.on-btn-color {
+    background-color: #7af47a;
+}
+.off-btn-color {
+    background-color: #e6e6e6;
+}
+.btn-focus {
+    background-color: $color-third;
+}
+.bgc-tab-control {
+    background-color: #f3f3f3;
+    color: black;
+    border: 1px solid #e6e6e6;
+    border-radius: 0px;
+    font-size: 2.5vh;
+    flex-grow: 1;
+}
+.bgc-tab-control-focus {
+    background-color: #f3f3f3;
+    color: $color-primary;
+    border: 1px solid #e6e6e6;
+    border-radius: 0px;
+    font-size: 2.5vh;
+    flex-grow: 1;
+}
+.tab-scroll-area {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-use-select: none;
+    user-select: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
+    height: 69vh;
+    resize: none;
+    display: block;
+    font-size: 2vh;
+    &::-webkit-scrollbar {
+        width: 15px;
+        background-color: rgba(20, 20, 20, 0.1);
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(20,20,20,0.2);
+        border-radius: 5px;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+        background-color: rgba(20,20,20,0.3);
+    }
+}
+.table-monitoring {
+    border: 0.5px solid gray;
+}
+.input {
+    border-radius: 5px; 
+    font-size:3vh; 
+    text-align: center; 
+    background-color:rgb(220, 220, 220);
+}
+
+.h-5 { height: 5%; }
+.h-10{ height: 10%; }
+.h-15{ height: 15%; }
+.h-20{ height: 20%; }
+.h-30{ height: 30%; }
+.h-35{ height: 35%; }
+.h-40{ height: 40%; }
+.h-45{ height: 45%; }
+.h-55{ height: 55%; }
+.h-60{ height: 60%; }
+.h-65{ height: 65%; }
+.h-70{ height: 70%; }
+.h-80{ height: 80%; }
+.h-85{ height: 85%; }
+.h-88{ height: 88%; }
+.h-90{ height: 90%; }
+.h-95{ height: 95%; }
+.h-98{ height: 98%; }
+.h-99{ height: 99%; }
+.w-5 { width: 5%; }
+.w-10{ width: 10%; }
+.w-15{ width: 15%; }
+.w-20{ width: 20%; }
+.w-30{ width: 30%; }
+.w-35{ width: 35%; }
+.w-40{ width: 40%; }
+.w-45{ width: 45%; }
+.w-55{ width: 55%; }
+.w-60{ width: 60%; }
+.w-65{ width: 65%; }
+.w-70{ width: 70%; }
+.w-80{ width: 80%; }
+.w-85{ width: 85%; }
+.w-90{ width: 90%; }
+.w-95{ width: 95%; }
+.w-96{ width: 96%; }
+.w-97{ width: 97%; }
+.w-98{ width: 98%; }
+.w-99{ width: 99%; }
