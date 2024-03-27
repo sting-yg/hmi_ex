@@ -12,3 +12,8 @@ module.exports = {
     ecmaVersion: 'latest'
   }
 }
+module.exports = {
+  rules: {
+    'vue/no-reserved-keys': 'off'
+  }
+};

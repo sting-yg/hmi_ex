@@ -1,15 +1,14 @@
-{
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.ts", "src/views/hmi/model/.ts", "src/views/hmi/stores/.ts", "src/views/dev/stores/.ts", "src/views/dev/model/data/.ts", "src/views/dev/model/status/.ts"],
-  "exclude": ["src/**/__tests__/*"],
-  "compilerOptions": {
-    "composite": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+// {
+//   "extends": "@vue/tsconfig/tsconfig.dom.json",
+//   "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/**/*.ts", "src/views/hmi/model/.ts", "src/views/hmi/stores/.ts", "src/views/dev/stores/.ts", "src/views/dev/model/data/.ts", "src/views/dev/model/status/.ts"],
+//   "exclude": ["src/**/__tests__/*"],
+//   "compilerOptions": {
+//     "composite": true,
+//     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
-}
-
+//     "baseUrl": ".",
+//     "paths": {
+//       "@/*": ["./src/*"]
+//     }
+//   }
+// }

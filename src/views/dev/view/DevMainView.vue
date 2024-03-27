@@ -1,18 +1,14 @@
 <template>
-    <router-view></router-view>
-
-    <!-- DebugResult -->
-
+    <router-view/>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { MonitoringStore } from '../stores/MonitoringStore';
-import type { Device } from '../model/status/Device';
-import { Project } from '../model/data/Project';
-import { ProjectMap } from '../model/data/Project';
-import { FileUtil } from '../util/FileUtil';
-
+import { MonitoringStore } from '@/views/dev/stores/MonitoringStore';
+import type { Device } from '@/views/dev/model/status/Device';
+import { Project } from '@/views/dev/model/data/Project';
+import { ProjectMap } from '@/views/dev/model/data/Project';
+import { FileUtil } from '@/views/dev/util/FileUtil';
 
 export default defineComponent({
     components:{
@@ -20,9 +16,10 @@ export default defineComponent({
     props: [],
 
     data: ()=>({       
-        wsConnectTimer: null as number|null,
-        wsLastUpdateTime: Date.now(),
-        wsClient: null as WebSocket | null,
+        _wsConnectTimer: null as NodeJS.Timeout | null,
+        _wsLastUpdateTime: Date.now(),
+        _wsClient: null as WebSocket | null,
+        _isOpenPasswordDialog : false,
     }),
 
     computed:{
@@ -37,15 +34,15 @@ export default defineComponent({
             MonitoringStore().setActiveDevice(MonitoringStore().devices[0].id);
             if(this.activeDevice !== null)
             {
-                if(this.wsClient != null)
+                if(this._wsClient != null)
                 {
-                    if(this.wsClient.readyState < 3)return;
-                    if(this.wsClient.readyState == 3)
+                    if(this._wsClient.readyState < 3)return;
+                    if(this._wsClient.readyState == 3)
                     {
-                        this.wsClient = null;
+                        this._wsClient = null;
                     }
                 }
-                if(this.wsClient == null)
+                if(this._wsClient == null)
                 {
                     var address : any
                     if(document.location.port ==='5173'){
@@ -54,23 +51,23 @@ export default defineComponent({
                     else{
                         address = `ws://${document.location.host}/ws/`
                     }
-                    this.wsClient = new WebSocket(address);
+                    this._wsClient = new WebSocket(address);
 
-                    this.activeDevice.webSocketClient = this.wsClient;
+                    this.activeDevice.webSocketClient = this._wsClient;
                     this.activeDevice.wsConnectState = 'connecting';
 
                 }
 
-                this.wsClient.onopen = () =>{
-                    this.wsLastUpdateTime = Date.now();
+                this._wsClient.onopen = () =>{
+                    this._wsLastUpdateTime = Date.now();
                     console.log(`ws connected! (${address})`);
                     this.activeDevice!.wsConnectState = "connected";
-                    this.wsClient!.onmessage = this.onWSMessage;
+                    this._wsClient!.onmessage = this.onWSMessage;
                 }
             }
         },
         onWSMessage(event : MessageEvent){
-            this.wsLastUpdateTime = Date.now();
+            this._wsLastUpdateTime = Date.now();
             try{
                 if(this.activeDevice !== null){
                     const jobj = JSON.parse(event.data);
@@ -123,9 +120,9 @@ export default defineComponent({
     async mounted(){
         document.title = "DEV";
 
-        this.wsConnectTimer = setInterval(async()=>{
+        this._wsConnectTimer = setInterval(async()=>{
             this.initWsClient();
-        },1000);
+        }, 1000);
 
         const mapImage = await FileUtil.createImageBitmapFromDataUrl("../../../../public/map.png")
         const map = new ProjectMap();
@@ -136,16 +133,19 @@ export default defineComponent({
         else {
             map.setImageWidth(500).setImageHeight(200).setResolution(0.1);
         }
-        const proj = new Project().setMap(map).setNodes([]);
+        const proj = new Project().setMap(map).setNode([]);
         MonitoringStore().setProject(proj);
     },
 
     beforeUnmount(){
-        if(this.wsConnectTimer){
-            clearInterval(this.wsConnectTimer)
+        if(this._wsConnectTimer){
+            clearInterval(this._wsConnectTimer)
         }
     },
 });
 
-
 </script>
+
+<style scoped lang="scss">
+
+</style>

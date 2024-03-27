@@ -12,3 +12,9 @@ export interface XYT {
     y : number,
     theta : number // angle from +x direction in degree
 }
+export interface POS2 {
+    x: number,
+    y: number,
+    z: number,
+    w: null | number,
+}

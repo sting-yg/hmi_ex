@@ -6,7 +6,7 @@ export class GridMap {
     freeThresh = 0.0;
     imageData = [];
 
-    fromPacket(param : any) : this { 
+    fromPacket(param: any) : this {
         if('resolution' in param) this.resolution = param.resolution;
         if('origin' in param) this.origin = param.origin;
         if('negate' in param) this.negate = param.negate;

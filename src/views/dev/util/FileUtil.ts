@@ -17,5 +17,26 @@ export class FileUtil{
                 resolve(null);
             }
         });        
-    }  
+    }
+
+    static readJsonFromLocalFile(fileInfo : Blob) : Promise<string> {
+        return new Promise(function(resolve, reject) {        
+            const reader = new FileReader();
+            reader.onload = (e) => { 
+                if(!e.target || !e.target.result) {
+                    reject('null result');
+                }
+                else if(typeof e.target.result === 'string'){
+                    resolve(e.target.result);
+                }
+                else {
+                    reject('invalid result');
+                }
+            };
+            reader.onerror = (e) => {
+                reject(reader.error);
+            };     
+            reader.readAsText(fileInfo);
+        });
+    }
 }
