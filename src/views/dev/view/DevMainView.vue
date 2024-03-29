@@ -1,14 +1,16 @@
 <template>
     <router-view/>
+
+    
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { MonitoringStore } from '@/views/dev/stores/MonitoringStore';
 import type { Device } from '@/views/dev/model/status/Device';
-import { Project } from '@/views/dev/model/data/Project';
-import { ProjectMap } from '@/views/dev/model/data/Project';
+import { Project, ProjectMap } from '@/views/dev/model/data/Project';
 import { FileUtil } from '@/views/dev/util/FileUtil';
+
 
 export default defineComponent({
     components:{
@@ -44,6 +46,7 @@ export default defineComponent({
                 }
                 if(this._wsClient == null)
                 {
+                    console.log("ws -try to connect");
                     var address : any
                     if(document.location.port ==='5173'){
                         address = 'ws://127.0.0.1:5173/amr'
@@ -63,6 +66,9 @@ export default defineComponent({
                     console.log(`ws connected! (${address})`);
                     this.activeDevice!.wsConnectState = "connected";
                     this._wsClient!.onmessage = this.onWSMessage;
+                    this._wsClient!.onclose = this.onWSClose;
+                    this._wsClient!.onerror = this.onWSError;
+                    document.title="DEV";
                 }
             }
         },
@@ -74,15 +80,9 @@ export default defineComponent({
                     if(jobj && 'cmd' in jobj){
                         if(jobj.cmd == 'app.monitoring.hmi'){
                             const hmidata = JSON.parse(jobj.data);
-                            if(hmidata && 'CommandNameToAMR' in hmidata){
-                                switch(hmidata.CommandNameToAMR){
-                                    case 'Monitoring':
-                                        MonitoringStore().setStatus(this.activeDevice, hmidata);
-                                        break;
-                                    default:
-                                        console.log(hmidata);
-                                        break;
-                                }
+                            if(hmidata){
+                                MonitoringStore().setStatus(this.activeDevice, hmidata);
+                                document.title = "DEV"
                             }
                         }
                     }
@@ -124,7 +124,7 @@ export default defineComponent({
             this.initWsClient();
         }, 1000);
 
-        const mapImage = await FileUtil.createImageBitmapFromDataUrl("../../../../public/map.png")
+        const mapImage = await FileUtil.createImageBitmapFromDataUrl('../map.png')
         const map = new ProjectMap();
 
         if(mapImage && mapImage instanceof ImageBitmap){
